@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: atlas_the_joy_of_painting_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: atlas_the_joy_of_painting_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atlas_the_joy_of_painting_db
+    # Corrected command: Removed single quotes around the module path
+    command: gunicorn -w 4 -b 0.0.0.0:5000 api.app:app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/api:/app/api
+      - ./backend/db:/app/db
+      - ./backend/etl:/app/etl
+    depends_on:
+      - db
+
+volumes:
+  db_data:

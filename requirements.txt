@@ -1,0 +1,11 @@
+# backend/requirements.txt
+Flask==3.1.1
+Flask-SQLAlchemy==3.1.1
+Flask-RESTful==0.3.10
+flask-cors
+python-dotenv
+graphene
+graphql-server[flask]
+mysql-connector-python==9.4.0
+gunicorn
+PyJWT
